@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       .json({ status: "failed", message: "You are not logged in!" });
   }
 
-  const user = await User.findOne({ email: session?.email });
+  const user = await User.findOne({ email: session.email });
   if (!user) {
     return res
       .status(404)
