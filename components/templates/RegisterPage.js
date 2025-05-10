@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,26 +34,21 @@ function RegisterPage() {
     if (status === "authenticated") router.replace("/");
   }, [status]);
 
+  if (status === "loading") return null;
+
   const onSubmit = async (data) => {
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        router.push("/login");
-      } else {
-        setError("root", {
-          type: "manual",
-          message: result.message || "خطایی در ثبت‌نام رخ داد",
-        });
-      }
-    } catch (error) {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    const result = await res.json();
+    if (result.status === "success") {
+      router.push("/login");
+    } else {
       setError("root", {
         type: "manual",
-        message: "خطا در ارتباط با سرور",
+        message: result.message || "Registration failed!",
       });
     }
   };
@@ -69,7 +64,7 @@ function RegisterPage() {
           type="text"
           placeholder="Email"
           {...register("email")}
-          className="mb-8"
+          className="mb-5"
         />
         {errors.email && (
           <p className="text-red-500 text-sm mb-5">{errors.email.message}</p>
@@ -78,7 +73,7 @@ function RegisterPage() {
           type="password"
           placeholder="Password"
           {...register("password")}
-          className="mb-8"
+          className="mb-5"
         />
         {errors.password && (
           <p className="text-red-500 text-sm mb-5">{errors.password.message}</p>
