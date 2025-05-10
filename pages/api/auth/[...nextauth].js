@@ -12,7 +12,7 @@ export const authOptions = {
       async authorize(credentials, req) {
         const { email, password } = credentials;
         try {
-          connectDB();
+          await connectDB();
         } catch (error) {
           throw new Error("Error in connecting to DB!");
         }
@@ -28,10 +28,26 @@ export const authOptions = {
         const isValid = await verifyPassword(password, user.password);
         if (!isValid) throw new Error("Username or password is incorrect!");
 
-        return { email };
+        return { id: user._id.toString(), email: user.email };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.email = token.email;
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
