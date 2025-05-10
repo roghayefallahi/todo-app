@@ -33,18 +33,6 @@ export const authOptions = {
     }),
   ],
 
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
-
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;
