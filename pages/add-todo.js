@@ -1,23 +1,19 @@
 import AddTodoPage from "@/components/templates/AddTodoPage";
-import { getSession } from "next-auth/react";
-import React from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function AddTodo() {
+  const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated" && router.pathname !== "/login") {
+      router.replace("/login");
+    }
+  }, [status, router]);
+
   return <AddTodoPage />;
 }
 
 export default AddTodo;
-
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return { props: { session } };
-}
