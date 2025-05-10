@@ -30,26 +30,27 @@ function LoginPage() {
 
   const router = useRouter();
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/");
+      router.push("/");
     }
   }, [status]);
-  
-  if (status === "loading") return null;
+
 
   const onSubmit = async (data) => {
     const res = await signIn("credentials", {
       ...data,
-      callbackUrl: "/",
+      redirect: false, 
     });
     if (res?.error) {
       toast.error("Email or password is incorrect.", {
         position: "top-right",
         autoClose: 3000,
       });
+    } else {
+      router.push("/");
     }
   };
 
