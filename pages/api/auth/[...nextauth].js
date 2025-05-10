@@ -6,7 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   providers: [
     CredentialsProvider({
       async authorize(credentials, req) {
@@ -32,15 +32,28 @@ export const authOptions = {
       },
     }),
   ],
+
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
+
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
   },
   pages: {
-    signIn: '/login',
-    signOut: '/login',
-    error: '/login',
+    signIn: "/login",
+    signOut: "/login",
+    error: "/login",
   },
 };
 
