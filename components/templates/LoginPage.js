@@ -30,7 +30,7 @@ function LoginPage() {
 
   const router = useRouter();
 
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (status === "authenticated") router.replace("/");
@@ -39,15 +39,13 @@ function LoginPage() {
   const onSubmit = async (data) => {
     const res = await signIn("credentials", {
       ...data,
-      redirect: false,
+      callbackUrl: "/",
     });
-    if (res.error) {
+    if (res?.error) {
       toast.error("Email or password is incorrect.", {
         position: "top-right",
         autoClose: 3000,
       });
-    } else {
-      router.push("/");
     }
   };
 
@@ -65,7 +63,9 @@ function LoginPage() {
           className="mb-8"
         />
         {errors.email && (
-          <span className="text-red-500 text-sm mb-3">{errors.email.message}</span>
+          <span className="text-red-500 text-sm mb-3">
+            {errors.email.message}
+          </span>
         )}
         <input
           type="password"
@@ -73,8 +73,10 @@ function LoginPage() {
           {...register("password")}
           className="mb-8"
         />
-          {errors.password && (
-          <span className="text-red-500 text-sm mb-3">{errors.password.message}</span>
+        {errors.password && (
+          <span className="text-red-500 text-sm mb-3">
+            {errors.password.message}
+          </span>
         )}
         <button
           type="submit"
