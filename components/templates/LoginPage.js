@@ -33,8 +33,12 @@ function LoginPage() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (status === "authenticated") router.replace("/");
+    if (status === "authenticated") {
+      router.replace("/");
+    }
   }, [status]);
+  
+  if (status === "loading") return null;
 
   const onSubmit = async (data) => {
     const res = await signIn("credentials", {
@@ -60,7 +64,7 @@ function LoginPage() {
           type="text"
           placeholder="Email"
           {...register("email")}
-          className="mb-8"
+          className="mb-5"
         />
         {errors.email && (
           <span className="text-red-500 text-sm mb-3">
@@ -71,7 +75,7 @@ function LoginPage() {
           type="password"
           placeholder="Password"
           {...register("password")}
-          className="mb-8"
+          className="mb-5"
         />
         {errors.password && (
           <span className="text-red-500 text-sm mb-3">

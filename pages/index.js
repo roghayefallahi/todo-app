@@ -6,7 +6,7 @@ export default function Home() {
 }
 
 export async function getServerSideProps({ req }) {
-  const session =await getSession({ req });
+  const session = await getSession({ req });
   if (!session) {
     return {
       redirect: {
@@ -16,5 +16,5 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  return { props: {} };
+  return { props: { session } };
 }
