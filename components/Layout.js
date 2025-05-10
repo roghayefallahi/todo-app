@@ -13,8 +13,6 @@ function Layout({ children }) {
 
   const { status } = useSession();
 
-  if (status === "loading") return null;
-
   const logOutHandler = () => {
     signOut();
   };

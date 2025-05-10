@@ -33,20 +33,14 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-      }
-      return token;
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-      }
-      return session;
-    },
+  },
+  pages: {
+    signIn: '/login',
+    signOut: '/login',
+    error: '/login',
   },
 };
 

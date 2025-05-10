@@ -31,10 +31,9 @@ function RegisterPage() {
   const { status } = useSession();
 
   useEffect(() => {
-    if (status === "authenticated") router.replace("/");
+    if (status === "authenticated") router.push("/");
   }, [status]);
 
-  if (status === "loading") return null;
 
   const onSubmit = async (data) => {
     const res = await fetch("/api/auth/register", {
