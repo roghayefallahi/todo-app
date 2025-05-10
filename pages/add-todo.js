@@ -1,12 +1,15 @@
-import HomePage from "@/components/templates/HomePage";
+import AddTodoPage from "@/components/templates/AddTodoPage";
 import { getSession } from "next-auth/react";
+import React from "react";
 
-export default function Home() {
-  return <HomePage />;
+function AddTodo() {
+  return <AddTodoPage />;
 }
 
+export default AddTodo;
+
 export async function getServerSideProps({ req }) {
-  const session =await getSession({ req });
+  const session = await getSession({ req });
   if (!session) {
     return {
       redirect: {

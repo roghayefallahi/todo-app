@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #3f47f4;
+  --lightGray: #7f7e86;
+  --todo: #f2b82e;
+  --inProgress: #1be2b1;
+  --review: #3f79f7;
+  --done: #14d3e2;
 }
 
 @theme inline {
@@ -10,17 +16,50 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-lightGray: var(--lightGray);
+  --color-todo: var(--todo);
+  --color-inProgress: var(--inProgress);
+  --color-review: var(--review);
+  --color-done: var(--done);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
+
+
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground) !important;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+li {
+  list-style: none;
+}
+
+input, textarea {
+  border: none;
+  border-radius: 8px;
+  margin-top: 5px;
+  background-color: #fff;
+  color: var(--lightGray);
+  font-size: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  padding: 5px 15px;
+  height: 35px;
+  outline: none;
+  max-width: 500px;
+}
+
+label {
+  color: var(--lightGray);
+  font-size: 1.3rem;
 }
