@@ -29,14 +29,14 @@ function Layout({ children }) {
 
         <h4>Todo App</h4>
 
-        {status === "authenticated" && (
+        {status === "authenticated" ? (
           <button
             onClick={logOutHandler}
             className="h-fit text-white text-2xl py-[5px] px-[10px] cursor-pointer"
           >
             <FiLogOut />
           </button>
-        )}
+        ) : null}
       </header>
       <div className="flex min-h-[calc(100vh-150px)]">
         <aside
