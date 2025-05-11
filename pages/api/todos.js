@@ -1,7 +1,6 @@
 import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
 import { getToken } from "next-auth/jwt";
-import { authOptions } from "./auth/[...nextauth]";
 import { sortTodos } from "@/utils/sortTodos";
 
 export default async function handler(req, res) {
@@ -13,14 +12,15 @@ export default async function handler(req, res) {
       .json({ status: "failed", message: "Error in connecting to DB!" });
   }
 
-  const session = await getToken({ req, authOptions });
-  if (!session) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+  if (!token) {
     return res
       .status(401)
       .json({ status: "failed", message: "You are not logged in!" });
   }
 
-  const user = await User.findOne({ email: session.email });
+  const user = await User.findOne({ email: token.email });
   if (!user) {
     return res
       .status(404)
