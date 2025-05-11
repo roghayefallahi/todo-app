@@ -32,12 +32,17 @@ export const authOptions = {
       },
     }),
   ],
-
-  callbacks: {
-    async redirect({ url, baseUrl }) {
-      return baseUrl;
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+      },
     },
   },
+
   pages: {
     signIn: "/login",
     signOut: "/login",
