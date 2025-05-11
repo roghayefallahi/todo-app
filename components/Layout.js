@@ -39,50 +39,52 @@ function Layout({ children }) {
         ) : null}
       </header>
       <div className="flex min-h-[calc(100vh-150px)]">
-        <aside
-          className={`bg-white w-64 sm:w-60 mt-[-80px] text-lightGray rounded-tr-[20px] pt-7 pl-7 transition-transform duration-300 fixed sm:static z-50 h-full max-sm:-mt-5 ${
-            showSidebar ? "translate-x-0" : "-translate-x-full"
-          } sm:translate-x-0`}
-        >
-          {/* Close button (only visible on mobile) */}
-          <div className="flex justify-end pr-4 sm:hidden">
-            <button onClick={closeSidebar} className="text-2xl">
-              <FiX />
-            </button>
-          </div>
-          <p className="text-[#494a52] text-md  sm:text-xl font-bold mb-10">
-            Welcome👋
-          </p>
-          <ul>
-            <li
-              className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
-              onClick={closeSidebar}
-            >
-              <VscListSelection />
-              <Link className="ml-3" href="/">
-                Todos
-              </Link>
-            </li>
-            <li
-              className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
-              onClick={closeSidebar}
-            >
-              <BiMessageSquareAdd />
-              <Link className="ml-3" href="/add-todo">
-                Add Todo
-              </Link>
-            </li>
-            <li
-              className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
-              onClick={closeSidebar}
-            >
-              <RxDashboard />
-              <Link className="ml-3" href="/profile">
-                Profile
-              </Link>
-            </li>
-          </ul>
-        </aside>
+        {status === "authenticated" ? (
+          <aside
+            className={`bg-white w-64 sm:w-60 mt-[-80px] text-lightGray rounded-tr-[20px] pt-7 pl-7 transition-transform duration-300 fixed sm:static z-50 h-full max-sm:-mt-5 ${
+              showSidebar ? "translate-x-0" : "-translate-x-full"
+            } sm:translate-x-0`}
+          >
+            {/* Close button (only visible on mobile) */}
+            <div className="flex justify-end pr-4 sm:hidden">
+              <button onClick={closeSidebar} className="text-2xl">
+                <FiX />
+              </button>
+            </div>
+            <p className="text-[#494a52] text-md  sm:text-xl font-bold mb-10">
+              Welcome👋
+            </p>
+            <ul>
+              <li
+                className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
+                onClick={closeSidebar}
+              >
+                <VscListSelection />
+                <Link className="ml-3" href="/">
+                  Todos
+                </Link>
+              </li>
+              <li
+                className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
+                onClick={closeSidebar}
+              >
+                <BiMessageSquareAdd />
+                <Link className="ml-3" href="/add-todo">
+                  Add Todo
+                </Link>
+              </li>
+              <li
+                className="text-md sm:text-lg font-medium mx-0 my-[15px] flex items-center"
+                onClick={closeSidebar}
+              >
+                <RxDashboard />
+                <Link className="ml-3" href="/profile">
+                  Profile
+                </Link>
+              </li>
+            </ul>
+          </aside>
+        ) : null}
         <section className="bg-[#f4f5fa]  overflow-x-hidden p-3 grow">
           {children}
         </section>
